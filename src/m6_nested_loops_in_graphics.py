@@ -4,8 +4,8 @@ in the context of TWO-DIMENSIONAL GRAPHICS.
 
 Authors: David Mutchler, Vibha Alangar, Matt Boutell, Dave Fisher,
          Mark Hays, Amanda Stouder, Aaron Wilkin, their colleagues,
-         and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         and Colton McKay.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import rosegraphics as rg
 
@@ -81,9 +81,64 @@ def draw_L(window, circle, r, c):
     and m and n are small, positive integers.
     """
     # -------------------------------------------------------------------------
-    # TODO: 2. Implement and test this function.
+    # DONE: 2. Implement and test this function.
     #     The testing code is already written for you (above).
     # -------------------------------------------------------------------------
+
+    original_x = circle.center.x
+    original_y = circle.center.y
+    radius = circle.radius
+    fill_color = circle.fill_color
+    orig_c = c
+    orig_r = r
+
+
+    x = original_x
+    y = original_y
+    c = 3
+    for i in range(r):  # Loop through the rows
+        for j in range(c):  # Loop through the columns
+            new_circle = rg.Circle(rg.Point(x, y), radius)
+            new_circle.fill_color = fill_color
+            new_circle.attach_to(window)
+            window.render(0.1)
+
+            x = x + (2 * radius)  # Move x to the right, for next circle
+
+        y = y + 2 * radius  # Move y down, for the next row of circles
+        x = original_x  # Reset x to the left-edge, for the next row
+
+    r = 3
+
+    for i in range(c):  # Loop through the rows
+        for j in range(r):  # Loop through the columns
+            new_circle = rg.Circle(rg.Point(x, y), radius)
+            new_circle.fill_color = fill_color
+            new_circle.attach_to(window)
+            window.render(0.1)
+
+            x = x + (2 * radius)  # Move x to the right, for next circle
+
+        y = y + 2 * radius  # Move y down, for the next row of circles
+        x = original_x  # Reset x to the left-edge, for the next row
+
+    #r = orig_r
+    c = orig_c
+    original_x = x + 6*radius
+    y = y - 6*radius
+
+    x = x + 6*radius
+    for i in range(r):  # Loop through the rows
+        for j in range(c):  # Loop through the columns
+            new_circle = rg.Circle(rg.Point(x, y), radius)
+            new_circle.fill_color = fill_color
+            new_circle.attach_to(window)
+            window.render(0.1)
+
+            x = x + (2 * radius)  # Move x to the right, for next circle
+
+        y = y + 2 * radius  # Move y down, for the next row of circles
+        x = original_x  # Reset x to the left-edge, for the next row
 
 
 def run_test_draw_wall_on_right():
@@ -122,9 +177,31 @@ def draw_wall_on_right(rectangle, n, window):
     and n is a small, positive integer.
     """
     # -------------------------------------------------------------------------
-    # TODO: 3. Implement and test this function.
+    # DONE: 3. Implement and test this function.
     #     The testing code is already written for you (above).
     # -------------------------------------------------------------------------
+
+
+    original_lower_left = rectangle._lower_left_corner
+    original_upper_right = rectangle._upper_right_corner
+    orig_width = rectangle.get_width()
+    orig_height = rectangle.get_height()
+
+    lower_left = original_lower_left.clone()
+    upper_right = original_upper_right.clone()
+    for j in range(n):  # Loop through the rows
+        for _ in range(j + 1):  # Loop through the columns
+            new_rect = rg.Rectangle(lower_left,upper_right)
+            new_rect.attach_to(window)
+            window.render(0.1)
+
+            lower_left.x = lower_left.x - orig_width # Move x to the right, for next circle
+            upper_right.x = upper_right.x - orig_width
+
+        lower_left.y = lower_left.y + orig_height # Move y down, for the next row of circles
+        upper_right.y = upper_right.y + orig_height
+        lower_left.x = original_lower_left.x
+        upper_right.x = original_upper_right.x # Reset x to the left-edge, for the next row
 
 
 # -----------------------------------------------------------------------------
